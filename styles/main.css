@@ -1,0 +1,227 @@
+/** @format */
+
+* {
+ margin: 0;
+ box-sizing: border-box;
+}
+body {
+ min-height: 100vh;
+ min-width: 100vw;
+ display: flex;
+ justify-content: center;
+ /* background-color: rgb(13, 77, 77); */
+ font-family: fantasy;
+ padding: 10px 50px;
+}
+main {
+ display: flex;
+ padding: 15px 15px 65px 15px;
+ justify-content: center;
+ flex-direction: column;
+ align-items: center;
+ margin: 10px auto;
+ min-width: inherit;
+}
+
+h1,
+h2 {
+ padding: 5px;
+ font-size: 22px;
+ color: black;
+ margin: 0 auto;
+ font-weight: 400;
+}
+main h2 {
+ font-size: 10px;
+ font-weight: 400;
+ font-family: sans-serif;
+ font-style: italic;
+ color: black;
+}
+#houseForm h3 {
+ display: flex;
+ font-size: 18px;
+ justify-content: center;
+ margin-bottom: 15px;
+ color: aliceblue;
+ font-style: italic;
+ font-family: fantasy;
+ font-weight: 600;
+}
+#houseForm {
+ display: flex;
+ flex-direction: column;
+ margin: 15px auto;
+ padding: 35px;
+ border: 12px solid rgba(23, 119, 122, 0.448);
+ background-color: rgba(23, 119, 122, 0.448);
+ border-radius: 5px;
+ max-width: 350px;
+}
+#houseForm label {
+ font-size: 12px;
+ margin: 5px;
+ color: aliceblue;
+ min-width: 300px;
+ font-family: fantasy;
+}
+#houseForm input,
+textarea,
+button {
+ padding: 10px;
+ background-color: rgba(56, 138, 139, 0.902);
+ border: 0px;
+ border-radius: 5px;
+ margin: 5px 0;
+ font-size: 15px;
+ color: aliceblue;
+}
+
+#houseForm .save-button {
+ background-color: rgb(39, 112, 113);
+ color: white;
+ text-transform: uppercase;
+ font-size: 15px;
+ font-family: fantasy;
+}
+#houseForm textarea {
+ resize: none;
+ min-height: 100px;
+}
+#houseForm,
+textarea:focus {
+ outline: none;
+}
+#houseForm input:focus {
+ outline: none;
+}
+#houseForm button {
+ color: rgba(13, 69, 71, 0.837);
+ font-size: 22px;
+ font-weight: 400;
+ margin-top: 10px;
+}
+
+.search input {
+ color: white;
+ font-size: 15px;
+ font-weight: bold;
+ margin: 10px auto;
+ padding: 10px;
+ display: flex;
+ align-items: center;
+ outline: 0.5px solid rgba(240, 248, 255, 0.5);
+ text-transform: capitalize;
+}
+.search-title h3 {
+ color: black;
+ margin-top: 50px;
+ font-size: 15px;
+ font-style: italic;
+}
+.search input {
+ margin-left: 15px;
+ border: none;
+ padding: 10px;
+ border-radius: 5px;
+ font-size: 18px;
+ font-weight: 400;
+ min-width: 180px;
+ background-color: rgba(23, 119, 122, 0.378);
+ color: black;
+}
+
+#houseList {
+ color: black;
+ font-size: 18px;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ margin: 10px auto;
+}
+.house-item {
+ color: aliceblue;
+ font-size: 12px;
+ padding: 10px;
+ line-height: 25px;
+ margin: 0;
+ text-transform: capitalize;
+}
+.house-item button {
+ color: aliceblue;
+ background-color: rgb(39, 112, 113);
+ justify-content: space-between;
+ width: 120px;
+ margin: 15px auto;
+ font-size: 10px;
+ font-family: fantasy;
+}
+
+.house-item button:hover {
+ cursor: pointer;
+ background-color: rgb(16, 47, 48);
+}
+#houseForm button:hover {
+ cursor: pointer;
+ background-color: rgb(16, 47, 48);
+}
+
+@media (min-width: 414px) {
+ main h2 {
+  font-size: 16px;
+ }
+}
+@media (min-width: 390px) {
+ main h1 {
+  font-size: 25px;
+ }
+ main h2 {
+  font-size: 15px;
+ }
+}
+@media (min-width: 768px) {
+ main {
+  width: 800px;
+ }
+ main h1 {
+  font-size: 25px;
+ }
+ main h2 {
+  font-size: 20px;
+ }
+ #houseForm label {
+  font-size: 20px;
+ }
+ #houseForm {
+  display: flex;
+  flex-direction: column;
+  padding: 45px;
+  min-width: 450px;
+  border-radius: 5px;
+ }
+ .search-title h3,
+ #houseForm {
+  font-size: 22px;
+ }
+ .search {
+  font-size: 5px;
+ }
+ .search label {
+  font-size: 18px;
+ }
+ .search input {
+  width: 280px;
+ }
+ #houseList {
+  font-size: 25px;
+ }
+ .house-item {
+  line-height: 40px;
+  font-size: 18px;
+ }
+ .house-item button {
+  min-width: 150px;
+  justify-content: space-between;
+  font-size: 16px;
+ }
+}

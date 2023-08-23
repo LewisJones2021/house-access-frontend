@@ -1,0 +1,38 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="./styles/main.css" />
+  <title>House Access Manager</title>
+ </head>
+ <body>
+  <main>
+   <h1>House Access Manager</h1>
+   <h2>Your all in one manager for accessing specific houses!</h2>
+   <div class="search-title">
+    <h3>Search for a house</h3>
+   </div>
+   <div class="search">
+    <input type="text" id="searchInput" />
+   </div>
+   <div id="houseList">
+    <!-- Display search results here -->
+   </div>
+   <form id="houseForm">
+    <h3>Add a house to the data system</h3>
+    <label for="houseName">House Name:</label>
+    <input type="text" id="houseName" required />
+    <label for="accessCode">Access Code:</label>
+    <input type="text" id="accessCode" required />
+    <label for="notes">Notes:</label>
+    <textarea id="notes" name="notes"></textarea>
+    <button class="save-button" type="submit">Save</button>
+   </form>
+  </main>
+  <script src="./main.js"></script>
+ </body>
+</html>
