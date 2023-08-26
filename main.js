@@ -18,8 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   try {
    // Save data to the server using a POST request
-   const response = await fetch('/api/houses', {
+   const response = await fetch('http://localhost:8080/api/houses', {
     method: 'POST',
+    mode: 'no-cors',
     headers: {
      'Content-Type': 'application/json',
     },
@@ -42,33 +43,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
  // Function to fetch and update the house list
  async function updateHouseList() {
-  console.log('fetched');
-
+  const searchQuery = searchInput.value.toLowerCase().trim();
+  if (searchQuery === "") {
+        houseList.innerHTML = ''
+  }
+  console.log("about to search the API with -> ", searchQuery)
   try {
    // Fetch data from the server using a GET request
-   const response = await fetch('/api/houses');
+   const response = await fetch(`http://localhost:8080/api/houses?houseName=${searchQuery}`, {
+        method: 'GET',
+   });
+   console.log(response)
    if (response.ok) {
-    const houses = await response.json(); // Convert the response data to JSON
+        houseList.innerHTML = ''
+        const houseData = await response.json(); // Convert the response data to JSON
 
-    // Clear the existing list before adding new data
-    houseList.innerHTML = '';
-
-    // Get the search query from the search input field
-    const searchQuery = searchInput.value.toLowerCase().trim();
-
-    // Create and append list items for each house in the response data
-    houses.forEach((houseData) => {
-     const houseName = houseData.houseName.toLowerCase(); // Convert the house name to lowercase
-
-     // Convert both the search query and the house name to lowercase for case-insensitive matching
-     const searchLower = searchQuery.toLowerCase();
-     const houseNameLower = houseName.toLowerCase();
-
-     // Check if the house name matches the search query with the exact number of queries.
-     const queryCount = searchQuery.trim().split('').length;
-     const houseNameCount = searchQuery.split('').length;
-
-     if (houseNameCount === queryCount && houseNameLower.startsWith(searchLower)) {
       // Show the house item if it matches the search query
       const listItem = document.createElement('div');
       listItem.className = 'house-item';
@@ -88,19 +77,22 @@ document.addEventListener('DOMContentLoaded', () => {
       deleteButton.addEventListener('click', () => deleteHouse(houseData._id));
       listItem.appendChild(deleteButton);
 
+      const clearButton = document.createElement('button');
+      clearButton.textContent = 'Clear results';
+      clearButton.addEventListener('click', () => {
+        houseList.innerHTML = ''
+        searchInput.value = ''
+      });
+      houseList.appendChild(clearButton);
+
       houseList.appendChild(listItem);
-     }
-     if (!searchQuery) {
-      houseList.style.display = 'none';
-     } else {
-      houseList.style.display = 'block';
-     }
-    });
    } else {
-    console.error('Error fetching house data.');
+    console.error('Error fetching house data.', response.status);
+    houseList.innerHTML = ''
    }
   } catch (error) {
    console.error('Error fetching house data:', error);
+   houseList.innerHTML = ''
   }
  }
  //  track if the edit form is already open.
