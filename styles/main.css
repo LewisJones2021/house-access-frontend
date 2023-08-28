@@ -2,20 +2,34 @@
 
 * {
  margin: 0;
+ padding: 0;
  box-sizing: border-box;
+}
+body,
+html {
+ overflow-x: hidden;
 }
 body {
  min-height: 100vh;
- min-width: 100vw;
+ width: 100%;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ font-family: fantasy;
+}
+header {
  display: flex;
  justify-content: center;
- /* background-color: rgb(13, 77, 77); */
- font-family: fantasy;
- padding: 10px 50px;
+ align-items: center;
+ flex-direction: column;
+ background-color: rgba(23, 119, 122, 0.448);
+ min-width: 100% !important;
+ min-height: 80px;
+ padding: 20px 25px;
 }
 main {
  display: flex;
- padding: 15px 15px 65px 15px;
+ /* padding: 15px 15px 15px 15px; */
  justify-content: center;
  flex-direction: column;
  align-items: center;
@@ -23,21 +37,27 @@ main {
  min-width: inherit;
 }
 
-h1,
-h2 {
- padding: 20px;
- font-size: 22px;
+header h1 {
+ padding-top: 10px;
+ font-size: 30px;
+ font-weight: 600;
+ letter-spacing: 3px;
+}
+
+header h2 {
+ padding: 15px;
+ font-size: 18px;
  color: black;
  margin: 0 auto;
- font-weight: 400;
+ font-weight: 700;
+ letter-spacing: 2px;
 }
-main h2 {
- font-size: 10px;
- font-weight: 400;
- font-family: sans-serif;
- font-style: italic;
- color: black;
+.header h2,
+span {
+ font-weight: 900;
+ font-size: 20px;
 }
+
 #houseForm h3 {
  display: flex;
  font-size: 18px;
@@ -45,25 +65,25 @@ main h2 {
  margin-bottom: 15px;
  color: aliceblue;
  font-style: italic;
- font-family: fantasy;
- font-weight: 600;
+ font-family: sans-serif;
+ font-weight: 800;
 }
 #houseForm {
  display: flex;
  flex-direction: column;
  margin: 15px auto;
- padding: 35px;
+ padding: 25px;
  border: 12px solid rgba(23, 119, 122, 0.448);
  background-color: rgba(23, 119, 122, 0.448);
- border-radius: 5px;
- max-width: 350px;
+ border-radius: 12px;
+ max-width: 450px;
 }
 #houseForm label {
  font-size: 12px;
  margin: 5px;
  color: aliceblue;
  min-width: 300px;
- font-family: fantasy;
+ font-family: sans-serif;
 }
 #houseForm input,
 textarea,
@@ -73,8 +93,9 @@ button {
  border: 0px;
  border-radius: 5px;
  margin: 5px 0;
- font-size: 15px;
+ font-size: 18px;
  color: aliceblue;
+ font-family: sans-serif;
 }
 
 #houseForm .save-button {
@@ -82,7 +103,6 @@ button {
  color: white;
  text-transform: uppercase;
  font-size: 15px;
- font-family: fantasy;
 }
 #houseForm textarea {
  resize: none;
@@ -98,16 +118,22 @@ textarea:focus {
 #houseForm button {
  color: rgba(13, 69, 71, 0.837);
  font-size: 22px;
- font-weight: 400;
+ font-weight: 800;
  margin-top: 10px;
 }
 
+.section1 {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ margin: 0 auto;
+}
 .search input {
  color: white;
  font-size: 15px;
  font-weight: bold;
  margin: 10px auto;
- padding: 10px;
+ padding: 10px 2px;
  display: flex;
  align-items: center;
  outline: 0.5px solid rgba(240, 248, 255, 0.5);
@@ -115,17 +141,19 @@ textarea:focus {
 }
 .search-title h3 {
  color: black;
- margin-top: 50px;
- font-size: 15px;
- font-style: italic;
+ padding-top: 18px;
+ font-size: 18px;
+ display: flex;
+ justify-content: center;
 }
 .search input {
  margin-left: 15px;
  border: none;
- padding: 10px;
+ padding: 20px;
  border-radius: 5px;
  font-size: 18px;
  font-weight: 400;
+ max-height: 30px;
  min-width: 180px;
  background-color: rgba(23, 119, 122, 0.378);
  color: black;
@@ -137,7 +165,16 @@ textarea:focus {
  display: flex;
  flex-direction: column;
  justify-content: center;
- margin: 10px auto;
+ text-align: center;
+ /* min-width: 500px; */
+ margin: 20px auto;
+}
+.clear-button {
+ background-color: rgb(39, 112, 113);
+ font-size: 15px;
+ width: 200px;
+ font-weight: 800;
+ margin: 0 auto;
 }
 .house-item {
  color: black;
@@ -151,10 +188,10 @@ textarea:focus {
  color: aliceblue;
  background-color: rgb(39, 112, 113);
  justify-content: space-between;
- width: 120px;
- margin: 15px auto;
+ /* width: 120px; */
+ margin-left: 2px;
  font-size: 10px;
- font-family: fantasy;
+ font-weight: 800;
 }
 
 .house-item button:hover {
@@ -166,62 +203,182 @@ textarea:focus {
  background-color: rgb(16, 47, 48);
 }
 
-@media (min-width: 414px) {
- main h2 {
+footer {
+ font-size: 20px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ min-width: 100vw;
+ min-height: 40vh;
+
+ padding: 30px;
+ background-color: rgb(215, 235, 236);
+}
+.contact h1 {
+ font-size: 20px;
+ padding: 10px;
+ letter-spacing: 1px;
+}
+.footer-form {
+ display: flex;
+ flex-direction: column;
+ margin: 0 auto;
+ max-width: 450px;
+ padding: 10px;
+}
+.footer-form label {
+ font-weight: 800;
+ padding: 5px 0 2px 0;
+ color: rgb(31, 30, 30);
+ margin: 5px 0;
+}
+.footer-form input {
+ background-color: rgba(56, 138, 139, 0.902);
+ padding: 12px;
+ border-radius: 5px;
+ color: white;
+ font-size: 18px;
+}
+.footer-form textarea {
+ resize: none;
+ font-size: 18px;
+ min-height: 100px;
+ max-width: inherit;
+}
+.footer-form .contact-button {
+ background-color: rgb(39, 112, 113);
+ color: white;
+ text-transform: uppercase;
+ font-size: 15px;
+ font-weight: 800;
+}
+.footer-form input:focus {
+ outline: none;
+}
+@media (max-width: 414px) {
+ .header {
+  width: 100vw;
+ }
+ header h1 {
+  font-size: 20px;
+ }
+ header h2,
+ span {
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+ }
+ main {
+  padding: 0;
+ }
+ #houseForm h3 {
+  font-size: 15px;
+ }
+ .clear-button {
+  font-size: 12px;
+ }
+ .contact h1 {
   font-size: 16px;
  }
-}
-@media (min-width: 390px) {
- main h1 {
-  font-size: 25px;
- }
- main h2 {
+ .footer-form label {
   font-size: 15px;
  }
 }
-@media (min-width: 768px) {
+@media (max-width: 375px) {
  main {
-  width: 800px;
+  padding: 0;
  }
- main h1 {
+ header {
+  min-width: 100%;
+  padding: 30px;
+ }
+
+ header h1 {
+  font-size: 18px;
+ }
+ header h2 {
+  width: 100%;
+  font-size: 14px;
+  text-align: center;
+ }
+ header h2,
+ span {
+  font-size: 16px;
+ }
+ .section1 {
+  margin: 10px 0;
+ }
+
+ footer {
+  margin-top: 50px;
+ }
+ .contact h1 {
+  font-size: 12px;
+ }
+}
+@media (max-width: 390px) {
+ header h2 {
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+ }
+ header span {
+  font-size: 16px;
+ }
+ #houseForm h3 {
+  font-size: 15px;
+ }
+ #houseForm {
+  margin-bottom: 50px;
+ }
+ footer,
+ h1 span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 18px;
+  text-align: center;
+ }
+
+ .footer-form label {
+  text-align: left;
+ }
+}
+@media (min-width: 768px) {
+ header h2,
+ span {
+  font-size: 15px;
+ }
+
+ .search-title h3 {
   font-size: 25px;
  }
- main h2 {
-  font-size: 20px;
+ .clear-button {
+  font-size: 16px;
+ }
+ .house-item {
+  margin-top: 15px;
+  font-size: 16px;
+ }
+
+ .delete-button,
+ .edit-button {
+  font-size: 16px !important;
+  margin-top: 15px;
+  margin-left: 12px !important;
+  padding: 12px;
+  min-width: 80px;
+ }
+ #houseForm {
+  max-width: 400px;
+  margin-bottom: 50px;
  }
  #houseForm label {
   font-size: 20px;
- }
- #houseForm {
-  display: flex;
-  flex-direction: column;
-  padding: 45px;
-  min-width: 450px;
-  border-radius: 5px;
- }
- .search-title h3,
- #houseForm {
-  font-size: 22px;
- }
- .search {
-  font-size: 5px;
- }
- .search label {
-  font-size: 18px;
- }
- .search input {
-  width: 280px;
- }
- #houseList {
-  font-size: 25px;
- }
- .house-item {
-  line-height: 40px;
-  font-size: 18px;
- }
- .house-item button {
-  min-width: 150px;
-  justify-content: space-between;
-  font-size: 16px;
  }
 }

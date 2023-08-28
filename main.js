@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
  // Add an event listener to the form to handle form submission
  houseForm.addEventListener('submit', async (event) => {
   event.preventDefault(); // Prevent the default form submission behavior
-
   // Get the input values from the form
   const houseName = document.getElementById('houseName').value;
   const accessCode = document.getElementById('accessCode').value;
@@ -26,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     body: JSON.stringify({ houseName, accessCode, houseNotes }), // Convert data to JSON format
    });
+   console.log(response);
 
    if (response.ok) {
     console.log('House data saved successfully.');
@@ -44,55 +44,58 @@ document.addEventListener('DOMContentLoaded', () => {
  // Function to fetch and update the house list
  async function updateHouseList() {
   const searchQuery = searchInput.value.toLowerCase().trim();
-  if (searchQuery === "") {
-        houseList.innerHTML = ''
+  if (searchQuery === '') {
+   houseList.innerHTML = '';
   }
-  console.log("about to search the API with -> ", searchQuery)
+  console.log('about to search the API with -> ', searchQuery);
   try {
    // Fetch data from the server using a GET request
    const response = await fetch(`http://localhost:8080/api/houses?houseName=${searchQuery}`, {
-        method: 'GET',
+    method: 'GET',
    });
-   console.log(response)
+   console.log(response);
    if (response.ok) {
-        houseList.innerHTML = ''
-        const houseData = await response.json(); // Convert the response data to JSON
+    houseList.innerHTML = '';
+    const houseData = await response.json(); // Convert the response data to JSON
 
-      // Show the house item if it matches the search query
-      const listItem = document.createElement('div');
-      listItem.className = 'house-item';
-      listItem.innerHTML = `
+    // Show the house item if it matches the search query
+    const listItem = document.createElement('div');
+    listItem.className = 'house-item';
+    listItem.innerHTML = `
               <strong>House Name:</strong> ${houseData.houseName}<br>
               <strong>Access Code:</strong> ${houseData.accessCode}<br>
               <strong>Notes:</strong> ${houseData.houseNotes}<br>`;
 
-      const editButton = document.createElement('button');
-      editButton.textContent = 'Edit';
-      // Pass the house ID to editHouse function.
-      editButton.addEventListener('click', () => editHouse(houseData._id));
-      listItem.appendChild(editButton);
+    const editButton = document.createElement('button');
+    editButton.textContent = 'Edit';
+    editButton.className = 'edit-button';
+    // Pass the house ID to editHouse function.
+    editButton.addEventListener('click', () => editHouse(houseData._id));
+    listItem.appendChild(editButton);
 
-      const deleteButton = document.createElement('button');
-      deleteButton.textContent = 'Delete';
-      deleteButton.addEventListener('click', () => deleteHouse(houseData._id));
-      listItem.appendChild(deleteButton);
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.className = 'delete-button';
+    deleteButton.addEventListener('click', () => deleteHouse(houseData._id));
+    listItem.appendChild(deleteButton);
 
-      const clearButton = document.createElement('button');
-      clearButton.textContent = 'Clear results';
-      clearButton.addEventListener('click', () => {
-        houseList.innerHTML = ''
-        searchInput.value = ''
-      });
-      houseList.appendChild(clearButton);
+    const clearButton = document.createElement('button');
+    clearButton.className = 'clear-button';
+    clearButton.textContent = 'Clear Results';
+    clearButton.addEventListener('click', () => {
+     houseList.innerHTML = '';
+     searchInput.value = '';
+    });
+    houseList.appendChild(clearButton);
 
-      houseList.appendChild(listItem);
+    houseList.appendChild(listItem);
    } else {
     console.error('Error fetching house data.', response.status);
-    houseList.innerHTML = ''
+    houseList.innerHTML = '';
    }
   } catch (error) {
    console.error('Error fetching house data:', error);
-   houseList.innerHTML = ''
+   houseList.innerHTML = '';
   }
  }
  //  track if the edit form is already open.

@@ -5,23 +5,27 @@
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <link rel="stylesheet" href="./styles/main.css" />
   <title>House Access Manager</title>
  </head>
  <body>
-  <main>
+  <header>
    <h1>House Access Manager</h1>
-   <h2>Your all in one manager for accessing specific houses!</h2>
-   <div class="search-title">
-    <h3>Search for a house</h3>
-   </div>
-   <div class="search">
-    <input type="text" id="searchInput" />
-   </div>
-   <div id="houseList">
-    <!-- Display search results here -->
-   </div>
+   <h2>Your all in one manager for <span>accessing specific houses!</span></h2>
+  </header>
+  <main>
+   <section class="section1">
+    <div class="search-title">
+     <h3>Search for a house</h3>
+    </div>
+    <div class="search">
+     <input type="text" id="searchInput" />
+    </div>
+    <div id="houseList">
+     <!-- Display search results here -->
+    </div>
+   </section>
+
    <form id="houseForm">
     <h3>Add a house to the data system</h3>
     <label for="houseName">House Name:</label>
@@ -32,6 +36,20 @@
     <textarea id="notes" name="notes"></textarea>
     <button class="save-button" type="submit">Save</button>
    </form>
+   <footer>
+    <section class="contact">
+     <h1>Any problems? <span>Please feel out the form below.</span></h1>
+     <form class="footer-form">
+      <label for="name">Name:</label>
+      <input />
+      <label for="email">Email:</label>
+      <input type="email" />
+      <label for="textarea">Message:</label>
+      <textarea></textarea>
+      <button class="contact-button" type="submit">Contact</button>
+     </form>
+    </section>
+   </footer>
   </main>
   <script src="./main.js"></script>
  </body>
