@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     headers: {
      'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ houseName, accessCode, houseNotes }), // Convert data to JSON format
+    body: JSON.stringify({ HouseName: houseName, AccessCode: accessCode, Notes: houseNotes }), // Convert data to JSON format
    });
    console.log(response);
 
@@ -57,38 +57,42 @@ document.addEventListener('DOMContentLoaded', () => {
    if (response.ok) {
     houseList.innerHTML = '';
     const houseData = await response.json(); // Convert the response data to JSON
+    console.log(houseData);
 
     // Show the house item if it matches the search query
-    const listItem = document.createElement('div');
-    listItem.className = 'house-item';
-    listItem.innerHTML = `
-              <strong>House Name:</strong> ${houseData.houseName}<br>
-              <strong>Access Code:</strong> ${houseData.accessCode}<br>
-              <strong>Notes:</strong> ${houseData.houseNotes}<br>`;
+    houseData.forEach((h) => {
+     const listItem = document.createElement('div');
+     console.log(listItem);
+     listItem.className = 'house-item';
+     listItem.innerHTML = `
+              <strong>House Name:</strong> ${h.houseName}<br>
+              <strong>Access Code:</strong> ${h.accessCode}<br>
+              <strong>Notes:</strong> ${h.houseNotes}<br>`;
+     console.log(h.houseNotes);
+     houseList.appendChild(listItem);
 
-    const editButton = document.createElement('button');
-    editButton.textContent = 'Edit';
-    editButton.className = 'edit-button';
-    // Pass the house ID to editHouse function.
-    editButton.addEventListener('click', () => editHouse(houseData._id));
-    listItem.appendChild(editButton);
+     const editButton = document.createElement('button');
+     editButton.textContent = 'Edit';
+     editButton.className = 'edit-button';
+     // Pass the house ID to editHouse function.
+     editButton.addEventListener('click', () => editHouse(houseData._id));
+     listItem.appendChild(editButton);
 
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
-    deleteButton.className = 'delete-button';
-    deleteButton.addEventListener('click', () => deleteHouse(houseData._id));
-    listItem.appendChild(deleteButton);
+     const deleteButton = document.createElement('button');
+     deleteButton.textContent = 'Delete';
+     deleteButton.className = 'delete-button';
+     deleteButton.addEventListener('click', () => deleteHouse(houseData._id));
+     listItem.appendChild(deleteButton);
 
-    const clearButton = document.createElement('button');
-    clearButton.className = 'clear-button';
-    clearButton.textContent = 'Clear Results';
-    clearButton.addEventListener('click', () => {
-     houseList.innerHTML = '';
-     searchInput.value = '';
+     const clearButton = document.createElement('button');
+     clearButton.className = 'clear-button';
+     clearButton.textContent = 'Clear Results';
+     clearButton.addEventListener('click', () => {
+      houseList.innerHTML = '';
+      searchInput.value = '';
+     });
+     houseList.appendChild(clearButton);
     });
-    houseList.appendChild(clearButton);
-
-    houseList.appendChild(listItem);
    } else {
     console.error('Error fetching house data.', response.status);
     houseList.innerHTML = '';
