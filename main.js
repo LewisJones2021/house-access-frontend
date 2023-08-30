@@ -23,16 +23,15 @@ document.addEventListener('DOMContentLoaded', () => {
     headers: {
      'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ HouseName: houseName, AccessCode: accessCode, Notes: houseNotes }), // Convert data to JSON format
+    body: JSON.stringify({ HouseName: houseName, AccessCode: accessCode, houseNotes }), // Convert data to JSON format
    });
    console.log(response);
 
    if (response.ok) {
     console.log('House data saved successfully.');
-    // Clear the form fields after successful save
-    houseForm.reset();
+
     // Update the house list after saving data
-    // updateHouseList();
+    updateHouseList();
    } else {
     console.error('Error saving house data.');
    }
@@ -54,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     method: 'GET',
    });
    console.log(response);
-   if (response.ok) {
+   if (response.status >= 200 && response.status < 300) {
     houseList.innerHTML = '';
     const houseData = await response.json(); // Convert the response data to JSON
     console.log(houseData);
