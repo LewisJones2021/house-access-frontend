@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Clear the form fields after successful save
     houseForm.reset();
     // Update the house list after saving data
-    updateHouseList();
+    // updateHouseList();
    } else {
     console.error('Error saving house data.');
    }
@@ -81,7 +81,9 @@ document.addEventListener('DOMContentLoaded', () => {
      const deleteButton = document.createElement('button');
      deleteButton.textContent = 'Delete';
      deleteButton.className = 'delete-button';
-     deleteButton.addEventListener('click', () => deleteHouse(houseData._id));
+     deleteButton.setAttribute('data-house-id', h.id);
+     console.log('House ID:', h);
+     deleteButton.addEventListener('click', () => deleteHouse(h.id));
      listItem.appendChild(deleteButton);
 
      const clearButton = document.createElement('button');
@@ -142,13 +144,15 @@ document.addEventListener('DOMContentLoaded', () => {
  async function deleteHouse(houseId) {
   try {
    console.log('Deleting house:', houseId);
-   const deleteResponse = await fetch(`/api/houses/${houseId}`, {
+   const deleteResponse = await fetch(`http://localhost:8080/api/houses/${houseId}`, {
     method: 'DELETE',
    });
 
    if (deleteResponse.ok) {
     console.log('Successfully deleted.');
     updateHouseList(searchInput.value.trim());
+   } else if (deleteResponse.status === 404) {
+    console.log('House not found');
    } else {
     console.log('Error deleting the house.');
    }
@@ -156,6 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
    console.error('Error removing the house from the data system', error);
   }
  }
+
  // Add an event listener to the search input field to trigger search on input
  searchInput.addEventListener('input', () => {
   updateHouseList(); // Update the list whenever the user types in the search box
