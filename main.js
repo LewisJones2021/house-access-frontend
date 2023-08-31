@@ -19,19 +19,18 @@ document.addEventListener('DOMContentLoaded', () => {
    // Save data to the server using a POST request
    const response = await fetch('http://localhost:8080/api/houses', {
     method: 'POST',
-    mode: 'no-cors',
     headers: {
      'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ HouseName: houseName, AccessCode: accessCode, houseNotes }), // Convert data to JSON format
+    body: JSON.stringify({ houseName, accessCode, houseNotes }), // Convert data to JSON format
    });
    console.log(response);
 
    if (response.ok) {
     console.log('House data saved successfully.');
-
     // Update the house list after saving data
     updateHouseList();
+    houseForm.reset();
    } else {
     console.error('Error saving house data.');
    }
@@ -58,6 +57,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const houseData = await response.json(); // Convert the response data to JSON
     console.log(houseData);
 
+    if (houseData == null || houseData.length == 0) {
+     const noResults = document.createElement('h1');
+     noResults.textContent = 'No Results';
+     noResults.className = 'no-data-h1';
+     houseList.appendChild(noResults);
+     return;
+    }
+
     // Show the house item if it matches the search query
     houseData.forEach((h) => {
      const listItem = document.createElement('div');
@@ -73,8 +80,9 @@ document.addEventListener('DOMContentLoaded', () => {
      const editButton = document.createElement('button');
      editButton.textContent = 'Edit';
      editButton.className = 'edit-button';
+     editButton.setAttribute('data-house-id', h.id);
      // Pass the house ID to editHouse function.
-     editButton.addEventListener('click', () => editHouse(houseData._id));
+     editButton.addEventListener('click', () => editHouse(h.id));
      listItem.appendChild(editButton);
 
      const deleteButton = document.createElement('button');
@@ -103,42 +111,44 @@ document.addEventListener('DOMContentLoaded', () => {
    houseList.innerHTML = '';
   }
  }
- //  track if the edit form is already open.
- let isEditing = false;
 
  //  function to edit and update the house information.
  async function editHouse(houseId) {
-  isEditing = true;
-  if (!isEditing) {
-   const newHouseName = prompt('Enter a new house name: ');
-   const newAccessCode = prompt('Enter the new access code: ');
-   const newHouseNotes = prompt('Enter a new note: ');
+  const newHouseName = prompt('Enter a new house name: ');
+  const newAccessCode = prompt('Enter the new access code: ');
+  const newHouseNotes = prompt('Enter a new note: ');
 
-   if (newHouseName && newAccessCode && newHouseNotes !== null && newHouseNotes.trim() !== '') {
-    try {
-     const editResponse = await fetch(`/api/houses/${houseId}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/JSON' },
-
-      body: JSON.stringify({ houseName: newHouseName, accessCode: newAccessCode, houseNotes: newHouseNotes }),
-     });
-     console.log('fetched');
-
-     if (editResponse.ok) {
-      console.log('House data updated successfully.');
-
-      // update the houselist.
-      updateHouseList(searchInput.value.trim());
-     } else {
-      console.log('There was an error updating the house data.');
-     }
-    } catch (error) {
-     console.error('Error updating the house data', error);
+  if (newHouseName && newAccessCode && newHouseNotes) {
+   try {
+    const updatedData = {
+     houseName: newHouseName,
+     accessCode: newAccessCode,
+     houseNotes: newHouseNotes,
+    };
+console.log(updatedData)
+    const editResponse = await fetch(`http://localhost:8080/api/houses/${houseId}`, {
+     method: 'PUT',
+     headers: { 'Content-Type': 'application/JSON' },
+     body: JSON.stringify(updatedData),
+    });
+    console.log(updatedData);
+    if (editResponse.ok) {
+     console.log('House data updated successfully.');
+     // update the houselist.
+     updateHouseList(searchInput.value.trim());
+    } else if (response.status === 404) {
+     console.log('There was an error updating the house data.');
+    } else {
+     console.log('Error updating the house');
     }
+   } catch (error) {
+    console.error('Error updating the house data', error);
    }
   }
-  isEditing = false;
+
+  // editHouse(h.id, updatedData);
  }
+
  //  function to delete a house from the data system.
  async function deleteHouse(houseId) {
   try {
@@ -165,11 +175,11 @@ document.addEventListener('DOMContentLoaded', () => {
   updateHouseList(); // Update the list whenever the user types in the search box
  });
 
- // add an event listener for the "Edit" button. and triggers editing of the corresponding house data.
- houseList.addEventListener('click', (event) => {
-  if (event.target && event.target.nodeName === 'BUTTON' && event.target.textContent === 'Edit') {
-   const houseId = event.target.dataset.houseId;
-   editHouse(houseId);
-  }
- });
+ //  //  add an event listener for the "Edit" button. and triggers editing of the corresponding house data.
+ //  houseList.addEventListener('click', (event) => {
+ //   if (event.target && event.target.nodeName === 'BUTTON' && event.target.textContent === 'Edit') {
+ //    const houseId = event.target.dataset.houseId;
+ //    editHouse(houseId);
+ //   }
+ //  });
 });
