@@ -160,6 +160,7 @@ console.log(updatedData)
    if (deleteResponse.ok) {
     console.log('Successfully deleted.');
     updateHouseList(searchInput.value.trim());
+    searchInput.value= '';
    } else if (deleteResponse.status === 404) {
     console.log('House not found');
    } else {
