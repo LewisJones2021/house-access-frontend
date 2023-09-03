@@ -92,8 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
      console.log('House ID:', h);
      deleteButton.addEventListener('click', () => deleteHouse(h.id));
      listItem.appendChild(deleteButton);
-
-     const clearButton = document.createElement('button');
+    });
+    const clearButton = document.createElement('button');
      clearButton.className = 'clear-button';
      clearButton.textContent = 'Clear Results';
      clearButton.addEventListener('click', () => {
@@ -101,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
       searchInput.value = '';
      });
      houseList.appendChild(clearButton);
-    });
    } else {
     console.error('Error fetching house data.', response.status);
     houseList.innerHTML = '';
