@@ -2,10 +2,20 @@
 
 // When the DOM is fully loaded, set up event listeners and fetch initial data
 document.addEventListener('DOMContentLoaded', () => {
+ console.log(window.location.href);
+ if (window.location.pathname === '/index.html' || window.location.pathname === '/') {
+  const user = localStorage.getItem('user');
+  if (user === null) {
+   window.location.href = '/login.html';
+   return;
+  }
+ }
+
  // Get references to the form and list elements
  const houseForm = document.getElementById('houseForm');
  const houseList = document.getElementById('houseList');
  const searchInput = document.getElementById('searchInput');
+ const logOut = document.getElementById('logout-button');
 
  // Add an event listener to the form to handle form submission
  houseForm.addEventListener('submit', async (event) => {
@@ -94,13 +104,13 @@ document.addEventListener('DOMContentLoaded', () => {
      listItem.appendChild(deleteButton);
     });
     const clearButton = document.createElement('button');
-     clearButton.className = 'clear-button';
-     clearButton.textContent = 'Clear Results';
-     clearButton.addEventListener('click', () => {
-      houseList.innerHTML = '';
-      searchInput.value = '';
-     });
-     houseList.appendChild(clearButton);
+    clearButton.className = 'clear-button';
+    clearButton.textContent = 'Clear Results';
+    clearButton.addEventListener('click', () => {
+     houseList.innerHTML = '';
+     searchInput.value = '';
+    });
+    houseList.appendChild(clearButton);
    } else {
     console.error('Error fetching house data.', response.status);
     houseList.innerHTML = '';
@@ -124,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
      accessCode: newAccessCode,
      houseNotes: newHouseNotes,
     };
-console.log(updatedData)
+    console.log(updatedData);
     const editResponse = await fetch(`http://localhost:8080/api/houses/${houseId}`, {
      method: 'PUT',
      headers: { 'Content-Type': 'application/JSON' },
@@ -159,7 +169,7 @@ console.log(updatedData)
    if (deleteResponse.ok) {
     console.log('Successfully deleted.');
     updateHouseList(searchInput.value.trim());
-    searchInput.value= '';
+    searchInput.value = '';
    } else if (deleteResponse.status === 404) {
     console.log('House not found');
    } else {
@@ -175,11 +185,8 @@ console.log(updatedData)
   updateHouseList(); // Update the list whenever the user types in the search box
  });
 
- //  //  add an event listener for the "Edit" button. and triggers editing of the corresponding house data.
- //  houseList.addEventListener('click', (event) => {
- //   if (event.target && event.target.nodeName === 'BUTTON' && event.target.textContent === 'Edit') {
- //    const houseId = event.target.dataset.houseId;
- //    editHouse(houseId);
- //   }
- //  });
+ logOut.addEventListener('click', () => {
+  localStorage.removeItem('user');
+  window.location.href = '/login.html';
+ });
 });
