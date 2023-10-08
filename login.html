@@ -9,16 +9,33 @@
   <link rel="stylesheet" href="./styles/login.css" />
  </head>
  <body>
+  <header>
+   <h1>House Access Manager</h1>
+  </header>
   <main>
    <section>
     <h1 class="login-h1">Please login to access the site</h1>
     <form class="login-form">
      <label for="email">Email:</label>
-     <input class="user-email" value="lewismacs@icloud.com" "email" aria-required="true" placeholder="Please enter your email" />
+     <input
+      class="user-email"
+      value="lewismacs@icloud.com"
+      type="email"
+      aria-required="true"
+      placeholder="Please enter your email" />
      <label for="password">Password:</label>
-     <input class="user-password" value="Adidass1122!" type="password" aria-required="true" placeholder="Please enter your password" />
+     <input
+      class="user-password"
+      type="password"
+      value="Adidass1122!"
+      aria-required="true"
+      placeholder="Please enter your password" />
     </form>
-    <p>Haven't got an account?<span class="signup-redirect"><a href="./sign-up.html"> Here to sign up</span></a></p>
+    <p class="sign-up-link">
+     Haven't got an account? &nbsp;<span class="signup-redirect"
+      ><a href="./sign-up.html"> Click here to sign up</a></span
+     >
+    </p>
     <button class="login-btn" type="submit">Login</button>
    </section>
   </main>

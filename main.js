@@ -11,6 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
  }
 
+ function getUserFromLocalStorage() {
+  const user = localStorage.getItem('user');
+  return JSON.parse(user);
+ }
+
  // Get references to the form and list elements
  const houseForm = document.getElementById('houseForm');
  const houseList = document.getElementById('houseList');
@@ -27,19 +32,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   try {
    // Save data to the server using a POST request
+   const usersToken = getUserFromLocalStorage();
    const response = await fetch('http://localhost:8080/api/houses', {
     method: 'POST',
-    headers: {
-     'Content-Type': 'application/json',
-    },
+    headers: { Token: usersToken.token },
     body: JSON.stringify({ houseName, accessCode, houseNotes }), // Convert data to JSON format
    });
    console.log(response);
 
    if (response.ok) {
     console.log('House data saved successfully.');
-    // Update the house list after saving data
-    updateHouseList();
+
     houseForm.reset();
    } else {
     console.error('Error saving house data.');
@@ -57,9 +60,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   console.log('about to search the API with -> ', searchQuery);
   try {
+   const usersToken = getUserFromLocalStorage();
+   console.log(usersToken);
+
    // Fetch data from the server using a GET request
    const response = await fetch(`http://localhost:8080/api/houses?houseName=${searchQuery}`, {
     method: 'GET',
+    headers: { Token: usersToken.token },
    });
    console.log(response);
    if (response.status >= 200 && response.status < 300) {
@@ -75,42 +82,61 @@ document.addEventListener('DOMContentLoaded', () => {
      return;
     }
 
+    const tableHeading = document.createElement('tr');
+    tableHeading.innerHTML = `
+
+              <td>House Name: </td>
+              <td>Access Code: </td>
+              <td>Notes: </td>
+              <td>Edit House</td>
+               <td>Delete House</td>`;
+    houseList.appendChild(tableHeading);
     // Show the house item if it matches the search query
     houseData.forEach((h) => {
-     const listItem = document.createElement('div');
+     const listItem = document.createElement('tr');
      console.log(listItem);
      listItem.className = 'house-item';
      listItem.innerHTML = `
-              <strong>House Name:</strong> ${h.houseName}<br>
-              <strong>Access Code:</strong> ${h.accessCode}<br>
-              <strong>Notes:</strong> ${h.houseNotes}<br>`;
+              <td>${h.houseName}</td>
+              <td>${h.accessCode}</td>
+              <td>${h.houseNotes}</td>`;
      console.log(h.houseNotes);
      houseList.appendChild(listItem);
 
      const editButton = document.createElement('button');
-     editButton.textContent = 'Edit';
+     const editColumn = document.createElement('td');
+     const editIcon = document.createElement('i');
+     editIcon.className = 'fa fa-pencil';
+     editButton.appendChild(editIcon);
      editButton.className = 'edit-button';
      editButton.setAttribute('data-house-id', h.id);
+     editColumn.appendChild(editButton);
      // Pass the house ID to editHouse function.
      editButton.addEventListener('click', () => editHouse(h.id));
-     listItem.appendChild(editButton);
+     listItem.appendChild(editColumn);
 
      const deleteButton = document.createElement('button');
+     const deleteColumn = document.createElement('td');
      deleteButton.textContent = 'Delete';
      deleteButton.className = 'delete-button';
      deleteButton.setAttribute('data-house-id', h.id);
+     deleteColumn.appendChild(deleteButton);
      console.log('House ID:', h);
      deleteButton.addEventListener('click', () => deleteHouse(h.id));
-     listItem.appendChild(deleteButton);
+     listItem.appendChild(deleteColumn);
     });
-    const clearButton = document.createElement('button');
-    clearButton.className = 'clear-button';
-    clearButton.textContent = 'Clear Results';
-    clearButton.addEventListener('click', () => {
-     houseList.innerHTML = '';
-     searchInput.value = '';
-    });
-    houseList.appendChild(clearButton);
+
+    if (document.querySelector('.clear-button') === null) {
+     const clearButton = document.createElement('button');
+     clearButton.className = 'clear-button';
+     clearButton.textContent = 'Clear Results';
+     clearButton.addEventListener('click', () => {
+      houseList.innerHTML = '';
+      searchInput.value = '';
+      clearButton.remove();
+     });
+     houseList.before(clearButton);
+    }
    } else {
     console.error('Error fetching house data.', response.status);
     houseList.innerHTML = '';
@@ -123,6 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
  //  function to edit and update the house information.
  async function editHouse(houseId) {
+  const usersToken = getUserFromLocalStorage();
   const newHouseName = prompt('Enter a new house name: ');
   const newAccessCode = prompt('Enter the new access code: ');
   const newHouseNotes = prompt('Enter a new note: ');
@@ -137,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log(updatedData);
     const editResponse = await fetch(`http://localhost:8080/api/houses/${houseId}`, {
      method: 'PUT',
-     headers: { 'Content-Type': 'application/JSON' },
+     headers: { Token: usersToken.token },
      body: JSON.stringify(updatedData),
     });
     console.log(updatedData);
@@ -160,16 +187,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
  //  function to delete a house from the data system.
  async function deleteHouse(houseId) {
+  const usersToken = getUserFromLocalStorage();
   try {
    console.log('Deleting house:', houseId);
    const deleteResponse = await fetch(`http://localhost:8080/api/houses/${houseId}`, {
     method: 'DELETE',
+    headers: { Token: usersToken.token },
    });
 
    if (deleteResponse.ok) {
     console.log('Successfully deleted.');
     updateHouseList(searchInput.value.trim());
-    searchInput.value = '';
+    // searchInput.value = '';
    } else if (deleteResponse.status === 404) {
     console.log('House not found');
    } else {

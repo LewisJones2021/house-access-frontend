@@ -6,28 +6,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="./styles/main.css" />
+
   <title>House Access Manager</title>
  </head>
  <body>
   <header>
    <h1>House Access Manager</h1>
-   <h2>Your all in one manager for <span>accessing specific houses!</span></h2>
   </header>
   <main>
    <section class="section1">
-    <div class="search-title">
-     <h3>Search for a house</h3>
-    </div>
     <div class="search">
-     <input type="text" id="searchInput" />
+     <input type="text" id="searchInput" placeholder="Search for a house..." />
     </div>
-    <div id="houseList">
-     <!-- Display search results here -->
-    </div>
+    <table id="houseList">
+     <tr>
+      <!-- <td>House Name:</td>
+      <td>House Name:</td>
+      <td>House Name:</td>
+     </tr> -->
+      <!-- Display search results here -->
+      <div class="edit-icon"><i class="fa-solid fa-pencil"></i></div>
+     </tr>
+    </table>
    </section>
 
    <form id="houseForm">
-    <h3>Add a house to the data system</h3>
+    <h3>Add a house to the data system - help manage your time!</h3>
     <label for="houseName">House Name:</label>
     <input type="text" id="houseName" required />
     <label for="accessCode">Access Code:</label>
@@ -36,9 +40,11 @@
     <textarea id="notes" name="notes"></textarea>
     <button class="save-button" type="submit">Save</button>
    </form>
-
-   <div class="logout-button">
-    <button id="logout-button">Logout</button>
+   <div class="main-btns">
+    <div class="logout">
+     <button id="logout-button">Logout</button>
+    </div>
+    <div class="improvements-btn"><a href="mailto:lewismacs20@gmail.com">Improvements?</a></div>
    </div>
   </main>
   <footer>
@@ -48,7 +54,6 @@
     </h1>
    </section>
   </footer>
-
   <script src="./main.js"></script>
  </body>
 </html>
