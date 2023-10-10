@@ -54,7 +54,7 @@ main {
  border: 2px solid rgb(255, 255, 255);
  background-color: rgb(71, 156, 225);
  border-radius: 15px;
- min-width: 55vw;
+ min-width: 50vw;
 }
 #houseForm label {
  font-size: 15px;
@@ -72,6 +72,7 @@ button {
  margin: 5px 0;
  font-size: 18px;
  color: white;
+ text-transform: lowercase;
 }
 
 #houseForm .save-button {
@@ -96,7 +97,7 @@ button {
  display: flex;
  justify-content: center;
  border: none;
- margin: 20px auto;
+ margin: 40px auto;
  padding: 25px;
  border-radius: 15px;
  font-size: 18px;
@@ -123,13 +124,14 @@ button {
  cursor: pointer;
 }
 
-.fa fa-pencil i {
- color: red;
+.edit-icon {
+ display: none;
 }
 
 .delete-button,
 .edit-button {
  text-align: center;
+ background: none;
 }
 .delete-button,
 .edit-button:hover {
@@ -140,18 +142,40 @@ button {
 }
 
 table {
- margin-top: 20px;
+ margin: 30px auto;
+ min-width: 50vw;
+ border-radius: 10px;
+ background-color: rgba(5, 79, 140, 0.751);
 }
 td {
- border: 2px solid rgb(5, 80, 140);
+ color: white;
+ margin: 0 auto;
+ border: 2px solid rgb(7, 90, 157);
  padding: 15px;
- border-radius: 2px;
- color: rgb(71, 156, 225);
- max-width: 100px;
+ min-width: 150px;
  word-wrap: break-word;
- margin-top: 0;
 }
 
+.edit-column,
+.delete-column {
+ width: 50px;
+}
+
+i.fa.fa-pencil,
+i.fa.fa-trash {
+ font-size: 25px;
+ color: white;
+}
+
+.no-data-h1 {
+ color: white;
+ background-color: rgb(255, 0, 0);
+ padding: 10px;
+ font-size: 15px;
+ font-weight: 800;
+ width: 105px;
+ text-align: center;
+}
 .house-item button {
  color: white;
  justify-content: space-between;
@@ -225,7 +249,9 @@ footer a {
 /* media queries */
 @media (max-width: 480px) {
  header h1 {
+  justify-content: center;
   font-size: 20px;
+  margin-top: 20px;
  }
  main {
   flex-direction: column;
@@ -238,7 +264,7 @@ footer a {
   font-size: 15px;
  }
  #houseForm {
-  max-width: 300px;
+  max-width: 350px;
  }
  #houseForm h3 {
   font-size: 15px;
@@ -250,12 +276,7 @@ footer a {
  .contact h1 {
   font-size: 14px;
  }
-}
 
-@media (max-width: 480px) {
- header h1 {
-  justify-content: center;
- }
  #logout-button,
  .improvements-btn {
   margin: 0 5px;
@@ -270,12 +291,20 @@ footer a {
   text-align: center;
   line-height: 15px;
  }
+ table {
+  width: 350px;
+ }
  td {
-  font-size: 12px;
+  font-size: 8px;
   padding: 5px;
-  max-width: 80px;
+  min-width: 15px;
+ }
+ i.fa.fa-pencil,
+ i.fa.fa-trash {
+  font-size: 12px;
  }
 }
+
 @media (min-width: 768px) and (max-width: 1023px) {
  header h1 {
   font-size: 25px;
@@ -306,6 +335,14 @@ footer a {
   line-height: 15px;
  }
 
+ table {
+  min-width: 500px;
+ }
+ td {
+  font-size: 14px;
+  padding: 5px;
+  min-width: 15px;
+ }
  .contact h1 span {
   font-size: 20px;
  }

@@ -85,9 +85,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const tableHeading = document.createElement('tr');
     tableHeading.innerHTML = `
 
-              <td>House Name: </td>
-              <td>Access Code: </td>
-              <td>Notes: </td>
+              <td>House Name</td>
+              <td>Access Code</td>
+              <td >House Notes</td>
               <td>Edit House</td>
                <td>Delete House</td>`;
     houseList.appendChild(tableHeading);
@@ -99,12 +99,13 @@ document.addEventListener('DOMContentLoaded', () => {
      listItem.innerHTML = `
               <td>${h.houseName}</td>
               <td>${h.accessCode}</td>
-              <td>${h.houseNotes}</td>`;
+              <td class="house-notes">${h.houseNotes}</td>`;
      console.log(h.houseNotes);
      houseList.appendChild(listItem);
 
      const editButton = document.createElement('button');
      const editColumn = document.createElement('td');
+     editColumn.className = 'edit-column';
      const editIcon = document.createElement('i');
      editIcon.className = 'fa fa-pencil';
      editButton.appendChild(editIcon);
@@ -117,7 +118,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
      const deleteButton = document.createElement('button');
      const deleteColumn = document.createElement('td');
-     deleteButton.textContent = 'Delete';
+     deleteColumn.className = 'delete-column';
+     const deleteIcon = document.createElement('i');
+     deleteIcon.className = 'fa fa-trash';
+     deleteButton.appendChild(deleteIcon);
      deleteButton.className = 'delete-button';
      deleteButton.setAttribute('data-house-id', h.id);
      deleteColumn.appendChild(deleteButton);
